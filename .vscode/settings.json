@@ -1,7 +1,0 @@
-{
-    // 行末のスペース削除
-    "files.trimTrailingWhitespace": true,
-
-    "python.analysis.typeCheckingMode": "basic",
-    "python.linting.flake8Enabled": true,
-}
