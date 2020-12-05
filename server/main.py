@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -23,3 +23,11 @@ def read_item(item_id: int, q: str = None):
 @app.put("/item/{item_id}")
 def update_item(item_id: int, item: Item):
     return {"item_name": item.name, "item_id": item_id}
+
+
+@app.post("/picture/")
+async def upload_picture(file: UploadFile = File(...)):
+    if file:
+        return {"file_size": file.filename}
+    else:
+        return {"file_size": None}
