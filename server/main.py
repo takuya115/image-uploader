@@ -1,3 +1,5 @@
+import os
+import shutil
 from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
 
@@ -28,6 +30,11 @@ def update_item(item_id: int, item: Item):
 @app.post("/picture/")
 async def upload_picture(file: UploadFile = File(...)):
     if file:
-        return {"file_size": file.filename}
+        # 保存先のファイルパスを設定
+        saved_file = os.path.join("./images", file.filename)
+        # ファイルの保存
+        with open(saved_file, "wb+") as sf:
+            shutil.copyfileobj(file.file, sf)
+        return {"file_name": file.filename}
     else:
-        return {"file_size": None}
+        return {"file_name": None}
